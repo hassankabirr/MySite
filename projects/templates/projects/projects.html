@@ -32,7 +32,7 @@
                 <img class="project__thumbnail" src="{{ proj.featured_image.url }}" alt="project thumbnail" />
                 <div class="card__body">
                   <h3 class="project__title">{{ proj.title }}</h3>
-                  <p><a class="project__author" href="profile.html">By Dennis Ivanov</a></p>
+                  <p><a class="project__author" href="profile.html">By {{ proj.owner.name }}</a></p>
                   <p class="project--rating">
                     <span style="font-weight: bold;">{{ proj.vote_ratio }}%</span> Postitive
                     Feedback ({{ proj.vote_total }} Vote{{ proj.vote_total|pluralize:"s"}})
