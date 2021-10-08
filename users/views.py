@@ -48,7 +48,7 @@ def registeruser(request):
 
 def logoutuser(request):
     logout(request)
-    messages.error(request, "logged out successfuly")
+    messages.info(request, "logged out successfuly")
 
     return redirect('login')
 def profiles(request):
