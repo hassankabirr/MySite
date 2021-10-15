@@ -36,7 +36,7 @@ def registeruser(request):
             user.save()
             messages.success(request, "user create successfuly")
             login(request, user)
-            return redirect('profiles')
+            return redirect('edit-account')
         else:
             messages.error(request, 'Error in registraion')
     context = {
