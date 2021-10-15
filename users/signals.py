@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 
 def createProfile(sender, instance, created, **kwargs):
-    print(created)
     if created:
         Profile.objects.create(
             user=instance,
@@ -11,11 +10,13 @@ def createProfile(sender, instance, created, **kwargs):
             name=instance.first_name,
             email=instance.email,
         )
-    else:
-        instance.profile.username = instance.username
-        instance.profile.name = instance.first_name
-        instance.profile.email = instance.email
-        instance.profile.save()
+def updateUser(sender, instance, created, **kwargs):
+    user = instance.user
+    if created == False:
+        user.username = instance.username
+        user.first_name = instance.name
+        user.email = instance.email
+        user.save()
 
 
 def deleteUser(sender, instance, **kwargs):
@@ -26,4 +27,5 @@ def deleteUser(sender, instance, **kwargs):
 
 
 post_save.connect(createProfile, sender=User)
+post_save.connect(updateUser, sender=Profile)
 post_delete.connect(deleteUser, sender=Profile)

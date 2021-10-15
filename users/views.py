@@ -3,7 +3,7 @@ from .models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .form import UserCreation
+from .form import UserCreation, UpdateProfile
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 def loginuser(request):
@@ -80,4 +80,19 @@ def useraccount(request):
 
 
     }
+
     return render(request, 'users/account.html', context)
+
+def editaccount(request):
+    profile = request.user.profile
+    form = UpdateProfile(instance=profile)
+    if request.method == 'POST':
+        form = UpdateProfile(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('account')
+
+    context = {
+        'form': form
+    }
+    return render(request, 'users/edite-account-form.html', context)
