@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .form import UserCreation
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def loginuser(request):
     if request.method == "POST":
@@ -67,3 +68,16 @@ def userProfile(request, pk):
         'tagskill': tagskill,
     }
     return render(request, 'users/user-profile.html', context)
+@login_required(login_url='login')
+def useraccount(request):
+    profile = request.user.profile
+    skills = profile.skill_set.all()
+    projects = profile.project_set.all()
+    context = {
+        'profile': profile,
+        'skills': skills,
+        'projects': projects,
+
+
+    }
+    return render(request, 'users/account.html', context)

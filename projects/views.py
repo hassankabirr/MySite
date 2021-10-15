@@ -60,3 +60,4 @@ def deleteProject(request, pk):
         'object': project,
     }
     return render(request, 'projects/create-update-project.html', context)
+
