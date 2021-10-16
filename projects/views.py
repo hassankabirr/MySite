@@ -63,5 +63,5 @@ def deleteProject(request, pk):
     context = {
         'object': project,
     }
-    return render(request, 'projects/create-update-project.html', context)
+    return render(request, 'delete-temp.html', context)
 

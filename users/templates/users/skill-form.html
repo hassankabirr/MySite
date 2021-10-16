@@ -1,8 +1,6 @@
 {% extends 'main.html' %}
-
 {% block contenet %}
-
-        <!-- Main Section -->
+            <!-- Main Section -->
     <main class="formPage my-xl">
         <div class="content-box">
             <div class="formWrapper">
@@ -10,17 +8,18 @@
                 <br>
 
                 <form class="form" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <!-- Input:Text -->
-                    {% for field in form %}
-                    <div class="form__field">
-                        <label for="formInput#text">{{ field.label }} </label>
+                     {% csrf_token %}
+          <!-- Input:Text -->
+                {% for field in form %}
+                      <div class="form__field">
+                        <label for="formInput#text">{{ field.label }}</label>
                         {{ field }}
-                    </div>
-                    {% endfor  %}
+                      </div>
+                {% endfor %}
+
                     <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
                 </form>
             </div>
         </div>
     </main>
-{% endblock %}
+'{%  endblock contenet %}
