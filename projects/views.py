@@ -3,14 +3,16 @@ from django.http import HttpResponse
 from .form import ProjectForm
 from .models import  Project
 from django.contrib.auth.decorators import login_required
-
+from .utils import searchProjects
 # Create your views here.
 
 
 def projects(request):
     projects = Project.objects.all()
+    projects, search_query = searchProjects(request)
     context = {
-        'projects': projects
+        'projects': projects,
+        'search_query': search_query
     }
     return render(request, 'projects/projects.html', context)
 

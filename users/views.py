@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .form import UserCreation, UpdateProfile, SkillForm
 from django.contrib.auth.decorators import login_required
+from .utils import searchProfile
 # Create your views here.
 def loginuser(request):
     if request.method == "POST":
@@ -54,8 +55,10 @@ def logoutuser(request):
     return redirect('login')
 def profiles(request):
     profiles = Profile.objects.all()
+    profiles, search_query = searchProfile(request)
     context = {
-        'profiles': profiles
+        'profiles': profiles,
+        'search_query': search_query
     }
     return render(request, 'users/profiles.html', context)
 def userProfile(request, pk):
