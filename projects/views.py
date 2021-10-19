@@ -3,14 +3,17 @@ from django.http import HttpResponse
 from .form import ProjectForm
 from .models import  Project
 from django.contrib.auth.decorators import login_required
-from .utils import searchProjects
+from .utils import searchProjects, paginatorProjects
 # Create your views here.
 
 
 def projects(request):
     projects = Project.objects.all()
     projects, search_query = searchProjects(request)
+    projects, paginnation, custome_range = paginatorProjects(request, projects, 3)
     context = {
+        'custome_range':custome_range,
+        'pagination': paginnation,
         'projects': projects,
         'search_query': search_query
     }

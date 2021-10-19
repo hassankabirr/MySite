@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .form import UserCreation, UpdateProfile, SkillForm
 from django.contrib.auth.decorators import login_required
-from .utils import searchProfile
+from .utils import searchProfile, paginatorProfiles
 # Create your views here.
 def loginuser(request):
     if request.method == "POST":
@@ -56,7 +56,10 @@ def logoutuser(request):
 def profiles(request):
     profiles = Profile.objects.all()
     profiles, search_query = searchProfile(request)
+    profiles, pagination, custome_range = paginatorProfiles(request, profiles, 2)
     context = {
+        'custome_range': custome_range,
+        'pagination': pagination,
         'profiles': profiles,
         'search_query': search_query
     }
