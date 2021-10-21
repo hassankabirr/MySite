@@ -17,11 +17,11 @@ def loginuser(request):
         except:
             messages.error(request, "username dose not  exist")
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user is not None:
-            print(user)
             login(request, user)
-            return redirect('profiles')
+
+
+            return redirect(request.GET.get('next') if 'next' in request.GET else 'profiles')
         else:
             messages.error(request, "username Or password is incorrect")
     return render(request, 'users/login_register.html')
@@ -112,6 +112,7 @@ def updateSkill(request, pk):
             skill_pre_save = form.save(commit=False)
             skill_pre_save.owner = profile
             skill_pre_save.save()
+            messages.success(request, 'successfully updated')
             return redirect('account')
     context = {
         'form': form
@@ -126,6 +127,7 @@ def creatSkill(request):
             skill_pre_save = form.save(commit=False)
             skill_pre_save.owner = profile
             skill_pre_save.save()
+            messages.success(request, 'successfully created')
             return redirect('account')
     context = {
         'form': form
@@ -137,6 +139,7 @@ def deleteSkill(request, pk):
     skill = profile.skill_set.get(pk=pk)
     if request.method == "POST":
         skill.delete()
+        messages.success(request, 'successfully deleted')
         return redirect('account')
     context = {
         'object': skill
