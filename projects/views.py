@@ -11,7 +11,7 @@ from django.contrib import  messages
 def projects(request):
     projects = Project.objects.all()
     projects, search_query = searchProjects(request)
-    projects, paginnation, custome_range = paginatorProjects(request, projects, 3)
+    projects, paginnation, custome_range = paginatorProjects(request, projects, 6)
     context = {
         'custome_range':custome_range,
         'pagination': paginnation,
@@ -51,10 +51,13 @@ def create_project(request):
     form = ProjectForm()
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
+        print(form)
         if form.is_valid():
             project = form.save(commit=False)
+            print(project.tags)
             project.owner = request.user.profile
             project.save()
+            form.save_m2m()
             return redirect('projects')
     context = {
         'form': form,
